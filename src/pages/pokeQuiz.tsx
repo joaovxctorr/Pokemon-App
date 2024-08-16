@@ -1,5 +1,3 @@
-// src/pages/pokequiz.tsx
-
 import React, { useEffect, useState, useRef } from 'react';
 import { getRandomPokemon, getPokemon, getPokemonSpecies, Pokemon } from '../services/pokemonService';
 
@@ -136,7 +134,7 @@ const PokeQuiz: React.FC = () => {
           type="text"
           value={guess}
           onChange={(e) => setGuess(e.target.value)}
-          placeholder="Advinhe o Pokémon"
+          placeholder="Adivinhe o Pokémon"
           className="border border-gray-300 rounded-lg px-4 py-2 mb-4 w-full text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         {/* Botão para submeter o palpite */}
@@ -144,7 +142,7 @@ const PokeQuiz: React.FC = () => {
           onClick={handleGuess}
           className="bg-blue-500 text-white p-2 rounded-lg w-full hover:bg-blue-600 transition duration-300"
         >
-          Advinhar
+          Adivinhar
         </button>
         {/* Exibe feedback com base no palpite e nas dicas */}
         {feedback && hint && (
