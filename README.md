@@ -1,44 +1,34 @@
-<<<<<<< HEAD
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Pokémon App
 
-## Getting Started
+Pokémon App é uma aplicação web interativa que oferece três principais funcionalidades relacionadas ao universo Pokémon: PokeSearch, PokeQuiz, e Pokedex. A aplicação proporciona uma experiência divertida e educativa para os fãs de Pokémon, permitindo a pesquisa de Pokémon, participação em um quiz desafiador e exploração de uma lista completa de Pokémon.
 
-First, run the development server:
+# Funcionalidades
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## PokeSearch
+PokeSearch é a tela inicial e principal da aplicação. Ela permite que os usuários pesquisem Pokémon e visualizem detalhes sobre eles. As principais características incluem:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+* Busca de Pokémon: Usuários podem pesquisar Pokémon pelo nome e visualizar um card com informações detalhadas sobre o Pokémon pesquisado.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+* Sugestões de Pokémon: Enquanto o usuário digita, sugestões de Pokémon são exibidas para facilitar a pesquisa.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+* Interface Intuitiva: Design responsivo e fácil de usar, proporcionando uma experiência de pesquisa fluida.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## PokeQuiz
+PokeQuiz é uma funcionalidade interativa onde os usuários participam de um jogo de adivinhação de Pokémon. Os principais aspectos incluem:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+* Jogo de Adivinhação: Os usuários tentam adivinhar um Pokémon aleatório com base em dicas fornecidas.
+* Feedback das Tentativas: Após cada tentativa, o jogo fornece feedback sobre a precisão da adivinhação, incluindo altura, peso, geração e tipos do Pokémon.
+* Temporizador: Um temporizador conta o tempo restante para adivinhar o Pokémon, e o jogo é reiniciado automaticamente após a expiração do tempo.
+Pokedex
+Pokedex é uma funcionalidade complementar que permite aos usuários explorar e visualizar uma lista abrangente de Pokémon. As características incluem:
 
-## Learn More
+* Lista de Pokémon: Exibe uma lista completa de Pokémon, permitindo a pesquisa e filtragem.
+* Detalhes do Pokémon: Fornece informações detalhadas sobre cada Pokémon, incluindo estatísticas, tipos, habilidades e imagens.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-=======
-# PokeSearch
->>>>>>> b7b4dfc04b7488a8befaa221c45caef334f18539
+## Tecnologias Utilizadas
+* React: Biblioteca JavaScript para construção de interfaces de usuário, permitindo a criação de componentes reutilizáveis e a gestão eficiente do estado da aplicação.
+* Next.js: Framework React para renderização do lado do servidor e geração de sites estáticos, melhorando o desempenho e a SEO do aplicativo.
+* TypeScript: Superset do JavaScript que adiciona tipagem estática, ajudando a evitar erros e melhorar a manutenção do código.
+* Tailwind CSS: Framework de utilitários para estilização de componentes, facilitando a criação de layouts responsivos e estilos personalizados.
+* PokeAPI: API pública que fornece acesso a dados abrangentes sobre Pokémon, usada para buscar informações de Pokémon e suas espécies.
+* Next/Image: Componente do Next.js para otimização de imagens, garantindo carregamento eficiente e melhor desempenho.

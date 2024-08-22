@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 import { getPokemon, getTypeWeaknesses, getPokemonSpecies, getEvolutionChain, Pokemon, PokemonType } from '../services/pokemonService';
 
 type PokemonCardProps = {
@@ -21,7 +22,6 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ name }) => {
         if (data) {
           setPokemon(data);
 
-          // Busca as fraquezas com base nos tipos do Pokémon
           const typeWeaknessesPromises = data.types.map(async (typeInfo: PokemonType) => {
             const typeData = await getTypeWeaknesses(typeInfo.type.name);
             return typeData ? typeData.double_damage_from.map((weak: { name: string }) => weak.name) : [];
@@ -31,7 +31,6 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ name }) => {
           const combinedWeaknesses: string[] = weaknessesData.flat();
           setWeaknesses([...new Set(combinedWeaknesses)]);
 
-          // Busca dados da espécie para obter a cadeia de evolução
           const speciesData = await getPokemonSpecies(data.species.url);
           if (speciesData) {
             const evolutionChainUrl = speciesData.evolution_chain.url;
@@ -54,7 +53,6 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ name }) => {
     fetchPokemonData();
   }, [name]);
 
-  // Função para extrair evoluções da cadeia de evolução
   const extractEvolutions = async (evolutionData: any): Promise<{ name: string; sprite: string }[]> => {
     const evolutions: { name: string; sprite: string }[] = [];
 
@@ -74,7 +72,6 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ name }) => {
     return evolutions;
   };
 
-  // Função para buscar o sprite de um Pokémon pelo nome
   const fetchPokemonSprite = async (name: string): Promise<string> => {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
     const data = await response.json();
@@ -95,42 +92,60 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ name }) => {
     }
   };
 
+  const handleSearchAgain = () => {
+    router.push('/');
+  };
+
   if (error) return <div className="flex items-center justify-center h-screen text-red-500 text-lg">{error}</div>;
   if (!pokemon) return <div className="flex items-center justify-center h-screen text-lg">Loading...</div>;
 
   return (
-    <div className="flex items-center justify-center h-screen p-4">
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full border border-gray-300 transition-transform transform hover:scale-105 hover:shadow-xl">
+    <div className="flex items-center justify-center min-h-screen p-4">
+      <div className="bg-white p-6 md:p-8 rounded-lg shadow-lg max-w-sm sm:max-w-md md:max-w-lg w-full border border-gray-300 transition-transform transform hover:scale-105 hover:shadow-xl">
         <div className="text-center mb-4">
-          <p className="text-2xl font-bold mb-2 text-gray-800">#{pokemon.id}</p>
-          <img src={pokemon.sprites.front_default} alt={pokemon.name} className="w-32 h-32 mx-auto mb-4" />
-          <h2 className="text-3xl font-bold mb-2 capitalize text-gray-800">{pokemon.name}</h2>
-          <p className="text-lg text-gray-700 mb-2">Types: {pokemon.types.map((typeInfo: PokemonType) => typeInfo.type.name).join(', ')}</p>
-          <p className="text-lg text-gray-700 mb-4">Weaknesses: {weaknesses.join(', ')}</p>
-          <p className="text-lg text-gray-700 mb-2">Height: {pokemon.height / 10} m</p>
-          <p className="text-lg text-gray-700 mb-2">Weight: {pokemon.weight / 10} kg</p>
-          <p className="text-lg text-gray-700 mb-4">Abilities: {pokemon.abilities.map((ability) => ability.ability.name).join(', ')}</p>
-          
-          {/* Exibe a seção de evoluções apenas se houver mais de uma evolução */}
+          <p className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 text-gray-800">#{pokemon.id}</p>
+          <Image
+            src={pokemon.sprites.front_default}
+            alt={pokemon.name}
+            width={96}
+            height={96}
+            className="w-24 h-24 sm:w-32 sm:h-32 mx-auto mb-4"
+          />
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 capitalize text-gray-800">{pokemon.name}</h2>
+          <p className="text-sm sm:text-base md:text-lg text-gray-700 mb-2">
+            Types: {pokemon.types.map((typeInfo: PokemonType) => typeInfo.type.name).join(', ')}
+          </p>
+          <p className="text-sm sm:text-base md:text-lg text-gray-700 mb-2">Weaknesses: {weaknesses.join(', ')}</p>
+          <p className="text-sm sm:text-base md:text-lg text-gray-700 mb-2">Height: {pokemon.height / 10} m</p>
+          <p className="text-sm sm:text-base md:text-lg text-gray-700 mb-2">Weight: {pokemon.weight / 10} kg</p>
+          <p className="text-sm sm:text-base md:text-lg text-gray-700 mb-4">
+            Abilities: {pokemon.abilities.map((ability) => ability.ability.name).join(', ')}
+          </p>
+
           {evolutions.length > 1 && (
-            <div>
-              <h3 className="text-2xl font-bold mb-2">Evolutions:</h3>
-              <div className="flex overflow-x-auto space-x-4">
+            <div className="text-center mt-4">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2">Evolutions:</h3>
+              <div className="flex overflow-x-auto space-x-2 sm:space-x-4 justify-center">
                 {evolutions.map((evolution) => (
                   <div key={evolution.name} className="text-center">
-                    <img src={evolution.sprite} alt={evolution.name} className="w-24 h-24 mb-2" />
-                    <p className="text-lg font-semibold capitalize">{evolution.name}</p>
+                    <Image
+                      src={evolution.sprite}
+                      alt={evolution.name}
+                      width={64}
+                      height={64}
+                      className="w-16 h-16 sm:w-24 sm:h-24 mb-2 mx-auto"
+                    />
+                    <p className="text-sm sm:text-base font-semibold capitalize text-gray-700">{evolution.name}</p>
                   </div>
                 ))}
               </div>
             </div>
           )}
 
-          <div className="flex justify-between mt-6">
-            
+          <div className="flex flex-col sm:flex-row justify-between mt-6">
             <button
               onClick={goToPreviousPokemon}
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 mb-2 sm:mb-0"
             >
               Previous
             </button>
@@ -141,7 +156,15 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ name }) => {
             >
               Next
             </button>
-
+          </div>
+          
+          <div className="text-center mt-4">
+            <button
+              onClick={handleSearchAgain}
+              className="bg-green-500 text-white px-4 py-2 rounded-lg mt-4 hover:bg-green-600 transition duration-300 w-full"
+            >
+              Buscar novamente
+            </button>
           </div>
         </div>
       </div>
